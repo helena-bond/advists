@@ -1,0 +1,102 @@
+#mainmenu,#exit {
+    margin-top: 40px;
+}
+
+#header {
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 15px;
+    margin-top: 10px;
+}
+
+#auth legend {
+    text-align: center;
+}
+
+.btn-auth {
+    margin-left: 10px;
+}
+
+#index-auth {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#index-auth h4 {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+#footer {
+    border-top: 1px solid #eeeeee;
+    padding: 20px;
+}
+
+.form-search {
+    margin-top: 20px;
+}
+
+.form form {
+    margin: 0 auto;
+}
+
+#flash-errors {
+    width: 100%;
+}
+
+#content .form-actions {
+    background-color: white;
+}
+
+#adminForm {
+    width: 500px;
+}
+
+div.breadcrumbs {
+    padding: 10px 0;
+}
+form fieldset {
+    padding-bottom: 20px;
+}
+
+/*Для красоты в отчетах*/
+.table td.clickable:hover {
+    cursor: pointer;
+    background-color: #d0e9c6 !important;
+}
+
+.table tbody tr > td.success {
+    background-color: #dff0d8 !important;
+}
+
+.table tbody tr > td.error {
+    background-color: #f2dede !important;
+}
+
+.table tbody tr > td.warning {
+    background-color: #fcf8e3 !important;
+}
+
+.table tbody tr > td.info {
+    background-color: #d9edf7 !important;
+    width: auto;
+}
+
+.table-hover tbody tr:hover > td.success {
+    background-color: #d0e9c6 !important;
+}
+
+.table-hover tbody tr:hover > td.error {
+    background-color: #ebcccc !important;
+}
+
+.table-hover tbody tr:hover > td.warning {
+    background-color: #faf2cc !important;
+}
+
+.table-hover tbody tr:hover > td.info {
+    background-color: #c4e3f3 !important;
+}
+
+.table tbody tr > td.changedtime {
+    border-bottom: 1px #149bdf dotted !important;
+}
