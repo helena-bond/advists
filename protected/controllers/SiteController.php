@@ -78,6 +78,11 @@ class SiteController extends Controller
         }
         $this->render('contact', array('model' => $model));
     }
+    
+    public function actionRedirect($url)
+    {
+        echo $url;
+    }
 
     /**
      * Displays the login page

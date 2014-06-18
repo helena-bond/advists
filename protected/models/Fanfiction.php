@@ -189,13 +189,16 @@ class Fanfiction extends CActiveRecord
         $config->set('AutoFormat.AutoParagraph',true); // авто добавление <p> в тексте при переносе
         $config->set('AutoFormat.RemoveEmpty',true); // удаляет пустые теги, есть исключения*
         $config->set('HTML.Doctype','HTML 4.01 Strict'); // обратите внимание как заменился тег <strike>
-        $uri = $config->getDefinition('URI');
-        $uri->addFilter(new HTMLPurifier_URIFilter_MakeRedirect(), $config);
-        $html = $config->getHTMLDefinition(true); // Получаем ссылку на объект HTMLPurifier_HTMLDefinition
-        $html->manager->addModule('TargetBlankAll'); // Добавляем модуль через манажер модулей
+        $config->set('HTML.AllowedComments', array('more'));
+        //$config->set('HTML.AllowedAttributes', '*.href, *.summary, *.src, *.abbr, *.alt');
+        //$uri = $config->getDefinition('URI');//H::p($config->getDefinition('URI')->host);
+        //$uri->addFilter(new HTMLPurifier_URIFilter_MakeRedirect(), $config);
+        //$html = $config->getHTMLDefinition(true); // Получаем ссылку на объект HTMLPurifier_HTMLDefinition
+        //$html->manager->addModule('TargetBlankAll'); // Добавляем модуль через манажер модулей
         $htmlpurifier->options = $config;
         $text = str_replace('\r\n', '\r\n\r\n', $this->content);
         $this->content = $htmlpurifier->purify($text); 
+        $this->content = preg_replace('/(<a.*href=")(http:\/\/(?!advists.com|demo).*)("[^>]*>)/', '$1'.Yii::app()->createAbsoluteUrl('site/redirect').'?url=$2$3', $this->content);
         return parent::beforeSave();
     }
 
@@ -227,15 +230,41 @@ class Fanfiction extends CActiveRecord
         return parent::afterSave();
     }
     
+    //meta description
     public function getDescription()
     {
         list($description) = explode('<!--more-->', $this->content);
         return H::UTF8_substr(str_replace( array("\n", "\r"), " ", strip_tags($description)), 0, 150);
     }
     
-    public function getFormatedContent()
+    public function getShort()
     {
-        return str_replace(array('</p><br>','</p><br />'), '</p>', nl2br($this->content));
+        list($description) = explode('<!--more-->', $this->content);
+        return $description;
+    }
+    
+    public function getFormatedContent($full = true)
+    {
+        return str_replace(array('</p><br>','</p><br />'), '</p>', nl2br(($full) ? $this->content : $this->getShort()));
+    }
+    
+    public function getLinks()
+    {
+        $links = array();
+        $related = array(
+            'fandom' => $this->fandoms,
+            'author' => $this->authors,
+            'character' => $this->characters,
+            'genre' => $this->genres,
+            'raiting' => $this->raitings
+        );
+        foreach($related as $type => $models) {
+            if(count($models) < 1) continue;
+            foreach($models as $m) {
+                $links[] = CHtml::link($m->name, array("{$type}/view", 'link' => $m->link));
+            }
+        }
+        return $links;
     }
 
 }

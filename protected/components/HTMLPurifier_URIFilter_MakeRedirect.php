@@ -17,7 +17,7 @@ class HTMLPurifier_URIFilter_MakeRedirect extends HTMLPurifier_URIFilter
      */
     public function prepare($config)
     {
-        $our_host = $config->getDefinition('URI')->host;
+        //$our_host = $config->getDefinition('URI')->host;//H::p($_SERVER['SERVER_NAME']);
         if ($our_host !== null) {
             $this->ourHostParts = array_reverse(explode('.', $our_host));
         }
@@ -40,16 +40,10 @@ class HTMLPurifier_URIFilter_MakeRedirect extends HTMLPurifier_URIFilter
         $host_parts = array_reverse(explode('.', $uri->host));
         foreach ($this->ourHostParts as $i => $x) {
             if (!isset($host_parts[$i]) || $host_parts[$i] != $this->ourHostParts[$i]) {
-                $path = Yii::app()->createUrl('site/redirect'); // Немного Yii, можно заменить на любой ваш url manager или просто вписать относительный путь до файла/action, который занимается редиректом
-                $query = 'url='.urlencode($uri->toString());
-                $uri = new HTMLPurifier_URI('http', 
-                                              null, 
-                                              Yii::app()->request->getServerName(), // return $_SERVER['SERVER_NAME']
-                                              null, 
-                                              $path, 
-                                              $query, 
-                                              null);
-                break;
+                //$path = Yii::app()->createUrl('site/redirect');
+                //$query = 'url='.urlencode($uri->toString());
+                //$uri = new HTMLPurifier_URI('http', null, 'advists.com', null, $path, $query, null);
+                break;//Yii::app()->request->getServerName(), // return $_SERVER['SERVER_NAME']
             }
         }
         return true;

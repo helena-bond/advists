@@ -85,10 +85,12 @@ return array(
             'urlFormat' => 'path',
             'rules' => array(
                 
-                '<controller:\w+>/<link:((?!index|create|admin|update|delete).+)>' => '<controller>/view',
+                //'<controller:\w+>/<link:([^\/]+)>' => '<controller>/view',
+                '<controller:(?!site)\w+>/<link:((?!index|create|admin)[^\/]+)>' => '<controller>/view',
+                '<controller:(?!site)\w+>/<action:\w+>/<link:((?!index|create|admin)[^\/]+)>' => '<controller>/view',
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:(index|create|admin)>' => '<controller>/<action>',
-                '<controller:\w+>/<action:(update|delete)>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
             ),
         ),
         'db' => array(
